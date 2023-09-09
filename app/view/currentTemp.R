@@ -1,4 +1,4 @@
-box::use(shinydashboard[box, valueBox], shiny[uiOutput, renderUI, moduleServer, NS, icon], htmltools[tags])
+box::use(shinydashboard[box, valueBox], shiny[uiOutput, renderUI, moduleServer, NS, icon, HTML], htmltools[tags])
 
 #' @export
 ui <- function(id) {
@@ -15,15 +15,14 @@ server <- function(id, current_data) {
       div_tag <- tags$div(img_tag, style = "text-align: center;")
       valueBox(
         width = 12,
-        subtitle = "Current Temperature",
+        subtitle = HTML(paste("Current Temperature", current_data$condition.text, sep = "<br>")),
         value = paste(current_data$temp_c, "°C"),
         icon = if (is.null(current_data)) {
           NULL
         } else{
           tags$i(div_tag)
         },
-        color = "navy",
-        current_data$condition.text
+        color = "navy"
       )
     })
   })
